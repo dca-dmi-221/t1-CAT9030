@@ -14,8 +14,7 @@ class Logic{
         downContainer.id = 'maincontainer';
         button.id= 'butoncito';
         var input = document.createElement("input");
-            input.setAttribute('type', 'text');
-           
+            input.setAttribute('type', 'text');     
             
         var newlabel = document.createElement("Label");
             newlabel.setAttribute("for",id_from_input);
@@ -26,7 +25,6 @@ class Logic{
             
             
     }
-
 
     preload(){
         

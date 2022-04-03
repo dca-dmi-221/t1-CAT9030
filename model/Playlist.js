@@ -4,6 +4,11 @@ class Playlist {
         this.id = id;
         this.nombre = nombre;
         this.canciones=canciones;
+
+        this.fontLight = loadFont("assets/Mulish-Light.ttf")
+        this.fontRegular = loadFont("assets/Mulish-Regular.ttf")
+        this.fontSemibold = loadFont("assets/Mulish-Semibold.ttf")
+        this.fontBold = loadFont("assets/Mulish-Bold.ttf")
     }
 
     agregar = (nombreSong,artistaSong,albumSong) => {
@@ -26,8 +31,13 @@ class Playlist {
 
     };
 
-    drawPlaylist(){
-
+    drawPlaylist(posX, posY){
+        
+        fill(255)
+        textSize(16);
+        textFont(this.fontSemibold)
+        text(this.nombre, posX, posY)
+        
     }
 
 

@@ -35,11 +35,10 @@ function preload() {
     
     soundFormats('mp3', 'ogg');
     pl1 = [
-        loadSound('./songs/Song1.mp3'),
+        loadSound('./songs/Lets Go.mp3'),
         loadSound('./songs/Song2.mp3'),
     ];
     //playlists.push(pl1);
-    console.log(playlists);
     songsClass = new Songs();
     console.log(songsClass);
 }
@@ -51,9 +50,13 @@ function setup () {
     background(0);
     logic.loadImage();
 
-    playlists.push(new Playlist(0,"Playlist HIJUEPUTA", songsClass))
-    console.log(playlists[0])
-    //sliders
+    playlists.push(new Playlist(0,"All Songs", songsClass))
+    playlists.push(new Playlist(1,"Playlist 1", [songsClass[0], songsClass[1],songsClass[2]]))
+    playlists.push(new Playlist(1,"Playlist 2", [songsClass[3], songsClass[4],songsClass[5], songsClass[6]]))
+
+    //console.log("GENERAL: "+playlists[1])
+    //console.log(songsClass.getSongs())
+
     volumeSlider = createSlider(0.0, 1.0, 0.5, 0.01);
     volumeSlider.position(840, 238);
     timeSlider = createSlider(0, pl1[currentSoundIndex].duration(), 0, 1 );
@@ -65,6 +68,7 @@ function setup () {
     const button = createButton('');
 }
 
+//funcion pa cargar
 function handleFileInput (file) {
     console.log(file)
     const soundFile = new p5.SoundFile(file);
@@ -73,12 +77,27 @@ function handleFileInput (file) {
 
 function draw() {
     logic.drawImage();
-    drawBar();
+    //drawBar();
     volumeNumber = volumeSlider.value();
     volume(volumeNumber);
     timeSong = timeSlider.value();
+    drawPl()
     
-    //5jumpSong(timeSong);
+}
+
+function drawPl(){
+    for (let index = 0; index < playlists.length; index++) {
+
+        playlists[index].drawPlaylist(120, 170+(index*30))
+    }
+}
+
+function drawSongsByPlaylist(){
+
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        
+    }
 }
 
 function mousePressed() {
@@ -94,6 +113,7 @@ function jumpSong(timeSong){
 }
 
 function mouseDragged(){
+    
     if(dist(mouseX,mouseY, bola.x, bola.y) < bola.r){
         const bonderies = {
         x1: rectangle.x,
