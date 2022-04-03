@@ -5,6 +5,7 @@ let songsClass;
 
 let pl1=[];
 let songsList=[];
+let playlistPosition;
 
 let volumeSlider;
 let volumeNumber;
@@ -32,6 +33,11 @@ const bola = {
 }
 
 function preload() {
+
+    this.fontLight = loadFont("assets/Mulish-Light.ttf")
+    this.fontRegular = loadFont("assets/Mulish-Regular.ttf")
+    this.fontSemibold = loadFont("assets/Mulish-Semibold.ttf")
+    this.fontBold = loadFont("assets/Mulish-Bold.ttf")
     
     soundFormats('mp3', 'ogg');
     pl1 = [
@@ -40,26 +46,27 @@ function preload() {
     ];
     //playlists.push(pl1);
     songsClass = new Songs();
-    console.log(songsClass);
+    songsList = songsClass.getSongs()
 }
 
 
 function setup () {
 
+    playlists.push(new Playlist(0,"All Songs", songsList))
+    playlists.push(new Playlist(1,"Playlist 1", [songsList[0], songsList[1], songsList[2]]))
+    playlists.push(new Playlist(2,"Playlist 2", [songsList[3], songsList[4], songsList[5], songsList[6]]))
+
+    playlistPosition=0;
+
+    console.log(playlists)
+
     createCanvas(1280, 720);
     background(0);
     logic.loadImage();
 
-    playlists.push(new Playlist(0,"All Songs", songsClass))
-    playlists.push(new Playlist(1,"Playlist 1", [songsClass[0], songsClass[1],songsClass[2]]))
-    playlists.push(new Playlist(1,"Playlist 2", [songsClass[3], songsClass[4],songsClass[5], songsClass[6]]))
-
-    //console.log("GENERAL: "+playlists[1])
-    //console.log(songsClass.getSongs())
-
     volumeSlider = createSlider(0.0, 1.0, 0.5, 0.01);
     volumeSlider.position(840, 238);
-    timeSlider = createSlider(0, pl1[currentSoundIndex].duration(), 0, 1 );
+    timeSlider = createSlider(0, playlists[playlistPosition].canciones[currentSoundIndex].file.duration(), 0, 1 );
     timeSlider.position(840, 285);
 
     //cargar desde el disco
@@ -81,37 +88,80 @@ function draw() {
     volumeNumber = volumeSlider.value();
     volume(volumeNumber);
     timeSong = timeSlider.value();
-    drawPl()
-    
+    textFont(this.fontSemibold)
+    drawPl();
+    drawSongsByPlaylist(playlistPosition);
 }
 
 function drawPl(){
+
+    const posX=120;
+    const posY=170;
+
     for (let index = 0; index < playlists.length; index++) {
 
-        playlists[index].drawPlaylist(120, 170+(index*30))
+        playlists[index].drawPlaylist(posX, posY+(index*30))
     }
 }
 
-function drawSongsByPlaylist(){
+function drawSongsByPlaylist(position){
 
-    for (let index = 0; index < array.length; index++) {
-        const element = array[index];
+    for (let index = 0; index < playlists[position].canciones.length; index++) {
         
+        fill(255)
+        textSize(12);
+        text(playlists[position].canciones[index].name, 325, 250+(index*30))
+        text(playlists[position].canciones[index].artist, 452, 250+(index*30))
+        text(playlists[position].canciones[index].album, 578, 250+(index*30))
+        rect(325, 250+(index*30),20,20)
+    }
+}
+
+function chooseSong() {
+
+    const posX=325;
+    const posY=250;
+    let songId;
+
+    for (let index = 0; index < playlists[playlistPosition].canciones.length; index++) {
+
+        console.log(playlists[playlistPosition].canciones[index].songZone());
+    }
+}
+
+function choosePlaylist() {
+    
+    const posX=120;
+    const posY=170;
+    let pos;
+
+    for (let index = 0; index < playlists.length; index++) {
+
+        pos = playlists[index].playlistZone(posX, posY+(index*30));
+
+        if(pos!==undefined){
+            console.log(pos)
+            playlistPosition=pos;
+        }
+
     }
 }
 
 function mousePressed() {
     buttons();
+    choosePlaylist()
+    chooseSong();
 }
 
 function volume(volumeNumber){
-    pl1[currentSoundIndex].setVolume(volumeNumber)
+    playlists[playlistPosition].canciones[currentSoundIndex].file.setVolume(volumeNumber)
 }
 
 function jumpSong(timeSong){
-    pl1[currentSoundIndex].jump(timeSong)
+    playlists[playlistPosition].canciones[currentSoundIndex].file.jump(timeSong)
 }
 
+/*
 function mouseDragged(){
     
     if(dist(mouseX,mouseY, bola.x, bola.y) < bola.r){
@@ -135,6 +185,8 @@ function mouseDragged(){
         }
     }
 }
+*/
+
 
 function drawBar(){
     rectMode(CORNER);
@@ -149,36 +201,40 @@ function buttons(){
     //play-pause
     if (mouseX > 890 && mouseX < 940 && mouseY > 192 && mouseY < 220){
         
-        if (pl1[currentSoundIndex].isPlaying()) {
-            pl1[currentSoundIndex].pause();
-        }else {
-            pl1[currentSoundIndex].play();
-        }
-
+        playButton();
     } 
 
     //next
     if (mouseX > 950 && mouseX < 968 && mouseY > 196 && mouseY < 215) {
         console.log("next")
         jumpSong('next');
-        pl1[currentSoundIndex].play();
+        playlists[playlistPosition].canciones[currentSoundIndex].file.play();
     }
 
     if (mouseX > 858 && mouseX < 872 && mouseY > 192 && mouseY < 220) {
         console.log("prev")
         jumpSong('prev');
-        pl1[currentSoundIndex].play();
+        playlists[playlistPosition].canciones[currentSoundIndex].file.play();
     }
 
     if (mouseX > 858 && mouseX < 872 && mouseY > 192 && mouseY < 220) {
         console.log("prev")
         jumpSong('prev');
-        pl1[currentSoundIndex].play();
+        playlists[playlistPosition].canciones[currentSoundIndex].file.play();
     }
 
     if (mouseX > 324 && mouseX < 420 && mouseY > 136 && mouseY < 160) {
         console.log("Playlist")
 
+    }
+}
+
+function playButton(){
+
+    if (playlists[playlistPosition].canciones[currentSoundIndex].file.isPlaying()) {
+        playlists[playlistPosition].canciones[currentSoundIndex].file.pause();
+    }else {
+        playlists[playlistPosition].canciones[currentSoundIndex].file.play();
     }
 }
 
@@ -188,7 +244,7 @@ function jumpSong(mode){
 
     if(mode === "next"){
         jumper = 1;
-        verify = currentSoundIndex + 1 < pl1.length
+        verify = currentSoundIndex + 1 < playlists[playlistPosition].canciones.length
     } else if (mode === "prev"){
         jumper = -1;
         verify = currentSoundIndex - 1 > 0
@@ -196,10 +252,10 @@ function jumpSong(mode){
 
     if (verify) {
 
-        pl1[currentSoundIndex].stop();
+        playlists[playlistPosition].canciones[currentSoundIndex].file.stop();
         currentSoundIndex += jumper;
     } else {
-        pl1[currentSoundIndex].stop();
+        playlists[playlistPosition].canciones[currentSoundIndex].file.stop();
         currentSoundIndex = 0;
     }
 }
