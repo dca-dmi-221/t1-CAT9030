@@ -1,20 +1,51 @@
+const container = document.getElementById('maincontainer');
 class Logic{
     constructor(){
+        this.hongitos;
+        this.hojitas;
+        this.kipito;
         this.backgroundImg;
         this.songs = [];
         
     }
+    render = () =>{
+        let downContainer = document.createElement('div');
+        let button= document.createElement('button'); 
+        downContainer.id = 'maincontainer';
+        button.id= 'butoncito';
+        var input = document.createElement("input");
+            input.setAttribute('type', 'text');
+           
+            
+        var newlabel = document.createElement("Label");
+            newlabel.setAttribute("for",id_from_input);
+            newlabel.innerHTML = Text;
+
+            downContainer.appendChild(newlabel);
+            downContainer.appendChild(input);
+            
+            
+    }
+
 
     preload(){
         
     }
 
     loadImage(){
+        
         this.backgroundImg = loadImage('./images/kipoback.png')
+        this.kipito = loadImage('./images/kipohi.png')
+        this.hojitas=loadImage('./images/hojitas.png')
+        this.hongitos=loadImage('./images/hongitos.png')
     }
 
     drawImage(){
+        
         image(this.backgroundImg, 0, 0, 1280, 720);
+        image(this.kipito,840,190,440,700);
+        image(this.hojitas,-200,61,440,700);
+        image(this.hongitos,890,1,440,700);
     }
 
     buttons(){
