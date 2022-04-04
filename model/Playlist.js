@@ -3,14 +3,11 @@ class Playlist {
     constructor(id,nombre, canciones){
         this.id = id;
         this.nombre = nombre;
-        this.canciones=canciones;
+        this.canciones = canciones
 
-        this.fontLight = loadFont("assets/Mulish-Light.ttf")
-        this.fontRegular = loadFont("assets/Mulish-Regular.ttf")
-        this.fontSemibold = loadFont("assets/Mulish-Semibold.ttf")
-        this.fontBold = loadFont("assets/Mulish-Bold.ttf")
     }
 
+    /*
     agregar = (nombreSong,artistaSong,albumSong) => {
 
 
@@ -29,16 +26,28 @@ class Playlist {
         }
     
 
-    };
+    };*/
 
     drawPlaylist(posX, posY){
         
         fill(255)
         textSize(16);
-        textFont(this.fontSemibold)
         text(this.nombre, posX, posY)
-        
     }
 
+    playlistZone(posX, posY){
+
+        if (mouseX > posX && mouseX < posX+74 && mouseY > posY - 15 && mouseY < posY) {
+            return this.id;   
+        }       
+    }
+
+    songZone(posX, posY){
+
+        if (mouseX > posX && mouseX < posX+317 && mouseY > posY - 15 && mouseY < posY) {
+            console.log(this.canciones);
+            return this.canciones;   
+        }
+    }
 
 }

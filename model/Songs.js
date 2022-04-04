@@ -6,15 +6,17 @@ class Songs {
                 name:"Let's Go",
                 artist: "Sumamá",
                 album: "Nosé Vol.1",
-                file: loadSound('./songs/Lets Go.mp3')
+                file: loadSound('./songs/Lets Go.mp3'),
+                img: loadImage('./images/image_3headband.png')
             },
         
             {
                 id: 1,
-                name:"Nosé2",
+                name:"Know My Name",
                 artist: "Sumamá2",
                 album: "Nosé Vol.2",
-                file: loadSound('./songs/Song2.mp3')
+                file: loadSound('./songs/Song2.mp3'),
+                img: loadImage('./images/image_2now_you_know_my_name.png')
             },
 
             {
@@ -22,7 +24,8 @@ class Songs {
                 name:"Fight The War",
                 artist: "Sumamá",
                 album: "Nosé Vol.1",
-                file: loadSound('./songs/Fight The War.mp3')
+                file: loadSound('./songs/Fight The War.mp3'),
+                img: loadImage('./images/image_4.png')
             },
 
             {
@@ -30,7 +33,8 @@ class Songs {
                 name:"Purple Jaguar Eye",
                 artist: "Sumamá",
                 album: "Nosé Vol.1",
-                file: loadSound('./songs/Purple Jaguar Eye.mp3')
+                file: loadSound('./songs/Purple Jaguar Eye.mp3'),
+                img: loadImage('./images/image_5.png')
             },
 
             {
@@ -38,7 +42,8 @@ class Songs {
                 name:"Heroes On Fire",
                 artist: "Sumamá",
                 album: "Nosé Vol.1",
-                file: loadSound('./songs/Heroes On Fire.mp3')
+                file: loadSound('./songs/Heroes On Fire.mp3'),
+                img: loadImage('./images/image_6.png')
             },
 
             {
@@ -46,7 +51,8 @@ class Songs {
                 name:"Don't Stop Now",
                 artist: "Sumamá",
                 album: "Nosé Vol.1",
-                file: loadSound('./songs/Dont Stop Now.mp3')
+                file: loadSound('./songs/Dont Stop Now.mp3'),
+                img: loadImage('./images/image_4.png')
             },
 
             {
@@ -54,16 +60,14 @@ class Songs {
                 name:"Crumbs",
                 artist: "Sumamá",
                 album: "Nosé Vol.1",
-                file: loadSound('./songs/Crumbs.mp3')
+                file: loadSound('./songs/Crumbs.mp3'),
+                img: loadImage('./images/image_1crumbs.png')
             },
     ] 
     }
     
     getSongs(){
-        return this.songs.id;
-    }
-
-    set setSongs(data){
-        this.songs.id= data;
+        
+        return this.songs;
     }
 }
