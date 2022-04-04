@@ -60,8 +60,7 @@ class Songs {
     }
     
     getSongs(){
-        
-        return this.songs;
+        return this.songs.id;
     }
 
     set setSongs(data){
