@@ -12,7 +12,7 @@ let volumeNumber;
 
 let timeSlider;
 let timeNumber;
-
+let addModal;
 let currentSoundIndex = 0;
 
 const OUTPUT = "HEAD"; // VOLUME | HEAD
@@ -57,7 +57,38 @@ function setup () {
     playlists.push(new Playlist(2,"Playlist 2", [songsList[3], songsList[4], songsList[5], songsList[6]]))
 
     playlistPosition=0;
-
+    const lname= createElement("label","Name")
+    const iname= createInput()
+    const dname=createDiv()
+    dname.addClass("formfield")
+    dname.child(lname)
+    dname.child(iname)
+    const lartist= createElement("label","Artist")
+    const iartist= createInput()
+    const dartist=createDiv()
+    dartist.addClass("formfield")
+    dartist.child(lartist)
+    dartist.child(iartist)
+    const lalbum= createElement("label","Album")
+    const ialbum= createInput()
+    const dalbum=createDiv()
+    dalbum.addClass("formfield")
+    dalbum.child(lalbum)
+    dalbum.child(ialbum)
+    
+    addModal = createDiv();
+    addModal.child(dname)
+    addModal.child(dartist)
+    addModal.child(dalbum)
+    addModal.style('z-index','2');
+    addModal.style("width","100");
+    addModal.style("Height","100");
+    addModal.style("background-color", "white");
+    addModal.style("position","absolute")
+    addModal.center();
+    addModal.addClass("popupContainer");
+    
+    addModal.hide();
     console.log(playlists)
 
     createCanvas(1280, 720);
@@ -65,13 +96,13 @@ function setup () {
     logic.loadImage();
 
     volumeSlider = createSlider(0.0, 1.0, 0.5, 0.01);
-    volumeSlider.position(840, 300);
+    volumeSlider.hide()
     //timeSlider = createSlider(0, playlists[playlistPosition].canciones[currentSoundIndex].file.duration(), 0, 1 );
     //timeSlider.position(840, 285);
 
     //cargar desde el disco
-    /*
-    const inputElem = createFileInput(handleFileInput);
+    
+    /*const inputElem = createFileInput(handleFileInput);
     inputElem.position(448, 448);
     const button = createButton('');
     */
@@ -79,25 +110,29 @@ function setup () {
 
 //funcion pa cargar
 
-/*
+
 function handleFileInput (file) {
     console.log(file)
     const soundFile = new p5.SoundFile(file);
     pl1.push(soundFile)
 }
 
-*/
+
 
 function draw() {
     logic.drawImage();
     //drawBar();
-    volumeNumber = volumeSlider.value();
+    if(logic.screen===1){
+        volumeSlider.show()
+        volumeSlider.position(840, 300);
+        volumeNumber = volumeSlider.value();
     volume(volumeNumber);
     //timeSong = timeSlider.value();
     
     drawPl();
     drawSongsByPlaylist(playlistPosition);
     drawSongInfo();
+    }
 }
 
 function drawPl(){
@@ -213,6 +248,10 @@ function mouseDragged(){
 }
 */
 
+function loadSong(){
+    addModal.show();
+}
+
 function buttons(){
     console.log("Mouse X: "+ mouseX + " Mouse Y: "+ mouseY);
 
@@ -222,6 +261,16 @@ function buttons(){
         playButton();
     } 
 
+    if(mouseX > 479 && mouseX <541 && mouseY>139 && mouseY<158){
+        console.log('upload');
+        loadSong()
+
+    }
+    if (mouseX > 377 && mouseX < 614 && mouseY > 193 && mouseY < 245) {
+        logic.screen=1
+        logic.drawImage();
+     }
+ 
     //next
     if (mouseX > 950 && mouseX < 968 && mouseY > 196 && mouseY < 215) {
         console.log("next")

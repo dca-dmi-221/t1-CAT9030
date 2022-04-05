@@ -4,6 +4,8 @@ class Logic{
         this.hongitos;
         this.hojitas;
         this.kipito;
+        this.inciote;
+        this.screen=0;
         this.backgroundImg;
         this.songs = [];
         
@@ -31,7 +33,7 @@ class Logic{
     }
 
     loadImage(){
-        
+        this.inciote= loadImage('./images/iniciote.png')
         this.backgroundImg = loadImage('./images/kipoback.png')
         this.kipito = loadImage('./images/kipohi.png')
         this.hojitas=loadImage('./images/hojitas.png')
@@ -39,16 +41,23 @@ class Logic{
     }
 
     drawImage(){
+        if(this.screen===0){
+            image(this.inciote,0, 0, 1280, 720);
+        }
+        else{
+            image(this.backgroundImg, 0, 0, 1280, 720);
+            image(this.kipito,840,190,440,700);
+            image(this.hojitas,-200,61,440,700);
+            image(this.hongitos,890,1,440,700);
+            
+        }
         
-        image(this.backgroundImg, 0, 0, 1280, 720);
-        image(this.kipito,840,190,440,700);
-        image(this.hojitas,-200,61,440,700);
-        image(this.hongitos,890,1,440,700);
     }
 
+    
     buttons(){
         console.log("Mouse X: "+ mouseX + " Mouse Y: "+ mouseY);
-    
+    console.log("acaaa");
         //play-pause
         if (mouseX > 890 && mouseX < 940 && mouseY > 192 && mouseY < 220){
             
@@ -59,7 +68,8 @@ class Logic{
             }
     
         } 
-    
+            
+        
         //next
         if (mouseX > 950 && mouseX < 968 && mouseY > 196 && mouseY < 215) {
             console.log("next")
